@@ -1,6 +1,6 @@
 # KU Polls
 
-A web application for conducting polls at [Kasetsart University](www.ku.ac.th)
+A web application for conducting polls at [Kasetsart University](https://www.ku.ac.th/)
 
 ## Project Documents
 
