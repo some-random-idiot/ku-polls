@@ -25,7 +25,7 @@ class Choice(models.Model):
     This model specifies a singular choice of a poll. It includes the choice's text, the amount of votes the choice
     receives, and the question it is related to.
     """
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)  # Links to the Question model
     text = models.CharField(max_length=500)
     votes = models.IntegerField(default=0)
 
