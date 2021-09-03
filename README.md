@@ -1,7 +1,6 @@
 # KU Polls
 
-Welcome to KU Polls repository! KU Poll is a web application for conducting polls at [Kasetsart University](https://www.ku.ac.th/). 
-Access project documents using the links provided below.
+Welcome to KU Polls repository! KU Poll is a web application for conducting polls at [Kasetsart University](https://www.ku.ac.th/). Access project documents using the links provided below.
 
 ## Project Documents
 
