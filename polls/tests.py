@@ -31,13 +31,63 @@ class QuestionModelTests(TestCase):
         recent_poll = Question(start_date=time)
         self.assertIs(recent_poll.was_published_recently(), True)
 
+    def test_question_is_published_unpublished(self):
+        """
+        Returns False if current date is before the poll’s publication date.
+        """
+        time = timezone.now() + datetime.timedelta(hours=23, minutes=59, seconds=59)
+        unpublished_poll = Question(start_date=time)
+        self.assertIs(unpublished_poll.is_published(), False)
+
+    def test_question_is_published_past(self):
+        """
+        Returns True if current date is after the poll’s publication date.
+        """
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        published_poll = Question(start_date=time)
+        self.assertIs(published_poll.is_published(), True)
+
+    def test_question_is_published_now(self):
+        """
+        Returns True if current date is on the poll’s publication date.
+        """
+        time = timezone.now()
+        published_poll = Question(start_date=time)
+        self.assertIs(published_poll.is_published(), True)
+
+    def test_can_vote_before_published(self):
+        """
+        Returns False if current date is before the poll’s publication date.
+        """
+        time = timezone.now() + datetime.timedelta(hours=23, minutes=59, seconds=59)
+        published_poll = Question(start_date=time)
+        self.assertIs(published_poll.can_vote(), False)
+
+    def test_can_vote_in_period(self):
+        """
+        Returns True if current date is within the poll’s voting period.
+        """
+        time_start = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        time_end = timezone.now() + datetime.timedelta(hours=23, minutes=59, seconds=59)
+        published_poll = Question(start_date=time_start, end_date=time_end)
+        self.assertIs(published_poll.can_vote(), True)
+
+    def test_can_vote_after_end_date(self):
+        """
+        Returns False if current date is after the poll’s voting end date.
+        """
+        time_start = timezone.now() - datetime.timedelta(days=2)
+        time_end = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        published_poll = Question(start_date=time_start, end_date=time_end)
+        self.assertIs(published_poll.can_vote(), False)
+
 
 def create_poll(text, days):
     """
-        Create a poll with the given `text` and published the
-        given number of `days` offset to now (negative for polls published
-        in the past, positive for polls that have yet to be published).
-        """
+    Create a poll with the given `text` and published the
+    given number of `days` offset to now (negative for polls published
+    in the past, positive for polls that have yet to be published).
+    """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(text=text, start_date=time, end_date=time)
 
