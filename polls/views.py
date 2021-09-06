@@ -23,7 +23,6 @@ class DetailView(generic.DetailView):
     """
     The detail page enables users to vote on the given choices.
     """
-    model = Question
     template_name = 'polls/detail.html'
 
     def get_queryset(self):
