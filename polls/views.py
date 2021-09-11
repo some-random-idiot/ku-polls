@@ -16,14 +16,23 @@ def index(request, error_message=''):
     return render(request, 'polls/index.html', context)
 
 
-def detail(request, question_id):
+class DetailView(generic.DetailView):
     """
     The detail page enables users to vote on the given choices.
     """
-    question = get_object_or_404(Question, pk=question_id)
-    if question.can_vote():
-        return render(request, 'polls/detail.html', {'question': question})
-    return redirect('polls:index', 'The poll you tried to access is not available for voting!')
+    template_name = 'polls/detail.html'
+
+    def get_queryset(self):
+        """
+        Get poll that matches the provided ID.
+        """
+        return Question.objects.filter(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        super().get(self, request, *args, **kwargs)
+        if not self.get_object().can_vote():
+            return redirect('polls:index', 'The poll you tried to access is not available for voting!')
+        return render(request, 'polls/index.html', self.get_context_data())
 
 
 class ResultsView(generic.DetailView):
