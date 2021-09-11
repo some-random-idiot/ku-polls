@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -15,8 +15,8 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_poll_list'
 
     def get_queryset(self):
-        """Return the five most recent published polls."""
-        return Question.objects.filter(start_date__lte=timezone.now()).order_by('-start_date')[:5]
+        """Return published polls."""
+        return Question.objects.filter(start_date__lte=timezone.now()).order_by('-start_date')
 
 
 class DetailView(generic.DetailView):
@@ -29,15 +29,15 @@ class DetailView(generic.DetailView):
         """
         Excludes any polls that aren't published yet.
         """
-        return Question.objects.filter(start_date__lte=timezone.now())
+        return Question.objects.filter(pk=self.kwargs['pk'])
 
 
 class ResultsView(generic.DetailView):
     """
     The result page displays the result of a poll.
     """
-    model = Question
     template_name = 'polls/results.html'
+    model = Question
 
 
 def vote(request, question_id):
