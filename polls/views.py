@@ -6,30 +6,24 @@ from django.views import generic
 from .models import Question, Choice
 
 
-class IndexView(generic.ListView):
+def index(request, error_message=''):
     """
     The landing page of the website. This page displays all available polls. User can select a poll of their choice to
     vote.
     """
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_poll_list'
-
-    def get_queryset(self):
-        """Return published polls."""
-        return Question.objects.filter(start_date__lte=timezone.now()).order_by('-start_date')
+    latest_poll_list = Question.objects.filter(start_date__lte=timezone.now()).order_by('-start_date')
+    context = {'latest_poll_list': latest_poll_list, "error_message": error_message}
+    return render(request, 'polls/index.html', context)
 
 
-class DetailView(generic.DetailView):
+def detail(request, question_id):
     """
     The detail page enables users to vote on the given choices.
     """
-    template_name = 'polls/detail.html'
-
-    def get_queryset(self):
-        """
-        Excludes any polls that aren't published yet.
-        """
-        return Question.objects.filter(pk=self.kwargs['pk'])
+    question = get_object_or_404(Question, pk=question_id)
+    if question.can_vote():
+        return render(request, 'polls/detail.html', {'question': question})
+    return redirect('polls:index', 'The poll you tried to access is not available for voting!')
 
 
 class ResultsView(generic.DetailView):
