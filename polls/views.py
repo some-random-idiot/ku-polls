@@ -20,8 +20,6 @@ class DetailView(generic.DetailView):
     """
     The detail page enables users to vote on the given choices.
     """
-    template_name = 'polls/detail.html'
-
     def get_queryset(self):
         """
         Get poll that matches the provided ID.
@@ -32,7 +30,7 @@ class DetailView(generic.DetailView):
         super().get(self, request, *args, **kwargs)
         if not self.get_object().can_vote():
             return redirect('polls:index', 'The poll you tried to access is not available for voting!')
-        return render(request, 'polls/index.html', self.get_context_data())
+        return render(request, 'polls/detail.html', self.get_context_data())
 
 
 class ResultsView(generic.DetailView):

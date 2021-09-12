@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/results.css' %}">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,17 +15,14 @@
 <tr>
     <th></th>
     <th></th>
-
-
 {% for choice in question.choice_set.all %}
 <tr>
     <th>{{ choice.text }}</th>
     <th>{{ choice.votes }}</th>
 </tr>
 {% endfor %}
-
 </table>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a> <a href="{% url 'polls:index' %}">Back to poll list</a>
+<br/><a href="{% url 'polls:detail' question.id %}">Vote again?</a> <a href="{% url 'polls:index' %}">Back to poll list</a>
 </body>
 </html>

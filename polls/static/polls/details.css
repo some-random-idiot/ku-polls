@@ -1,0 +1,12 @@
+body {
+    background: white url("images/background.jpg") no-repeat;
+    background-size: 1920px 2560px;
+}
+
+p {
+    color: red;
+}
+
+a{
+    color: green;
+}
