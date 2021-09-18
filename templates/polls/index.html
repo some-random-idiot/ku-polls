@@ -9,9 +9,8 @@
     <title>Polls</title>
 </head>
 <body>
-{% if error_message %}
-    {{ error_message }}
-{% endif %}
+{% if error_message == "error" %}<p><strong>The poll you tried to access is not available for voting!</strong></p>{% endif %}
+
 {% if latest_poll_list %}
     <ul>
     {% for question in latest_poll_list %}

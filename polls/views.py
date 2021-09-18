@@ -29,7 +29,7 @@ class DetailView(generic.DetailView):
     def get(self, request, *args, **kwargs):
         super().get(self, request, *args, **kwargs)
         if not self.get_object().can_vote():
-            return redirect('polls:index', 'The poll you tried to access is not available for voting!')
+            return redirect('polls:index', 'error')
         return render(request, 'polls/detail.html', self.get_context_data())
 
 
