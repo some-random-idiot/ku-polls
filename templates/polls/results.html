@@ -17,8 +17,8 @@
     <th></th>
 {% for choice in question.choice_set.all %}
 <tr>
-    <th>{{ choice.text }}</th>
-    <th>{{ choice.votes }}</th>
+    <th class="occupied">{{ choice.text }}</th>
+    <th class="occupied">{{ choice.votes }}</th>
 </tr>
 {% endfor %}
 </table>
