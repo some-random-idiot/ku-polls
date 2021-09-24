@@ -9,7 +9,13 @@
     <title>Polls</title>
 </head>
 <body>
+<div class="webTitle">
+  <h1>KU Polls</h1>
+</div>
+
 {% if error_message == "error" %}<p><strong>The poll you tried to access is not available for voting!</strong></p>{% endif %}
+
+<h2>Choose a poll</h2>
 
 {% if latest_poll_list %}
     <ul>

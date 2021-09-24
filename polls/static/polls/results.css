@@ -9,6 +9,11 @@ th.occupied {
     border: 3px solid black;
 }
 
-a{
+a {
     color: green;
+}
+
+.webTitle {
+    background: green;
+    width: 200%;
 }

@@ -7,6 +7,11 @@ p {
     color: red;
 }
 
-a{
+a {
     color: green;
+}
+
+.webTitle {
+    background: green;
+    width: 200%;
 }
