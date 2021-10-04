@@ -1,3 +1,10 @@
 coverage
 django
 python-decouple
+dj-database-url
+wheel
+sqlparse
+snowballstemmer
+setuptools
+pytz
+asgiref
