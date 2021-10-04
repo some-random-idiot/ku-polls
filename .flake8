@@ -6,3 +6,4 @@ exclude =
     polls/migrations,
     venv,
     templates,
+    config

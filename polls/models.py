@@ -16,6 +16,10 @@ class Question(models.Model):
     start_date = models.DateTimeField('starting date')
     end_date = models.DateTimeField('ending date')
 
+    def __str__(self):
+        """Return the model's description."""
+        return self.text
+
     def was_published_recently(self):
         """Check if a poll was published recently."""
         now = timezone.now()
@@ -30,10 +34,6 @@ class Question(models.Model):
         if self.is_published() and timezone.now() <= self.end_date:
             return True
         return False
-
-    def __str__(self):
-        """Return the model's description."""
-        return self.text
 
 
 class Choice(models.Model):
