@@ -1,4 +1,4 @@
-"""KU Poll's models are defined here."""
+"""KU Poll's models."""
 
 import datetime
 from django.db import models
