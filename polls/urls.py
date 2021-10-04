@@ -1,3 +1,5 @@
+"""KU Poll's url patterns."""
+
 from django.urls import path
 from . import views
 
