@@ -67,10 +67,9 @@ class QuestionModelTests(TestCase):
         self.assertIs(published_poll.can_vote(), False)
 
 
-def create_poll(text, days):
+def create_poll(text, start, end):
     """Create a poll with the given `text` and days offset."""
-    time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(text=text, start_date=time, end_date=time)
+    return Question.objects.create(text=text, start_date=start, end_date=end)
 
 
 class QuestionIndexViewTests(TestCase):
@@ -85,7 +84,8 @@ class QuestionIndexViewTests(TestCase):
 
     def test_past_poll(self):
         """Polls with a start_date in the past are displayed on the index page."""
-        create_poll(text="Past poll.", days=-30)
+        create_poll("Past poll.", start=timezone.now() - datetime.timedelta(days=30),
+                    end=timezone.now() - datetime.timedelta(days=10))
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
             response.context['latest_poll_list'],
@@ -94,15 +94,18 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_poll(self):
         """Polls with a start_date in the future aren't displayed on the index page."""
-        create_poll(text="Future poll.", days=30)
+        create_poll("Future poll.", start=timezone.now() + datetime.timedelta(days=30),
+                    end=timezone.now() - datetime.timedelta(days=40))
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context['latest_poll_list'], [])
 
     def test_future_poll_and_past_poll(self):
         """Even if both past and future polls exist, only past polls are displayed."""
-        create_poll(text="Past poll.", days=-30)
-        create_poll(text="Future poll.", days=30)
+        create_poll("Past poll.", start=timezone.now() - datetime.timedelta(days=30),
+                    end=timezone.now() - datetime.timedelta(days=10))
+        create_poll("Past poll.", start=timezone.now() + datetime.timedelta(days=30),
+                    end=timezone.now() - datetime.timedelta(days=40))
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
             response.context['latest_poll_list'],
@@ -111,12 +114,15 @@ class QuestionIndexViewTests(TestCase):
 
     def test_two_past_polls(self):
         """The polls index page may display multiple polls."""
-        create_poll(text="Past poll 1.", days=-30)
-        create_poll(text="Past poll 2.", days=-5)
+        create_poll("Past poll 1.", start=timezone.now() - datetime.timedelta(days=30),
+                    end=timezone.now() - datetime.timedelta(days=10))
+        create_poll("Past poll 2.", start=timezone.now() - datetime.timedelta(days=10),
+                    end=timezone.now() - datetime.timedelta(days=5))
+        create_poll("Present Poll.", start=timezone.now(), end=timezone.now() + datetime.timedelta(days=5))
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
             response.context['latest_poll_list'],
-            ['<Question: Past poll 2.>', '<Question: Past poll 1.>']
+            ['<Question: Present Poll.>', '<Question: Past poll 2.>', '<Question: Past poll 1.>']
         )
 
 
@@ -124,15 +130,17 @@ class QuestionDetailViewTests(TestCase):
     """Contain tests for the Detail view."""
 
     def test_future_poll(self):
-        """The detail view of a poll with a start_date in the future returns a 404 not found."""
-        future_poll = create_poll(text='Future poll.', days=5)
+        """The detail view of a poll with a start_date in the future results in a redirect."""
+        future_poll = create_poll("Dummy 1", start=timezone.now() + datetime.timedelta(days=5),
+                                  end=timezone.now() + datetime.timedelta(days=10))
         url = reverse('polls:detail', args=(future_poll.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_past_poll(self):
-        """The detail view of a poll with a start_date in the past displays the poll's text."""
-        past_poll = create_poll(text='Past Question.', days=-5)
+        """The detail view of a poll with a end date in the past results in a redirect."""
+        past_poll = create_poll("Dummy 2", start=timezone.now() - datetime.timedelta(days=15),
+                                end=timezone.now() - datetime.timedelta(days=10))
         url = reverse('polls:detail', args=(past_poll.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_poll.text)
+        self.assertEqual(response.status_code, 302)
