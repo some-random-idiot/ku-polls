@@ -1,4 +1,6 @@
 # KU Polls
+[![Build Status](https://app.travis-ci.com/some-random-idiot/ku-polls.svg?branch=main)](https://app.travis-ci.com/github/some-random-idiot/ku-polls)
+[![codecov](https://codecov.io/gh/some-random-idiot/ku-polls/branch/main/graph/badge.svg?token=4HAIT5NGF2)](https://codecov.io/gh/some-random-idiot/ku-polls)
 
 Welcome to KU Polls repository! KU Poll is a web application for conducting polls at [Kasetsart University](https://www.ku.ac.th/). Access project documents using the links provided below.
 
