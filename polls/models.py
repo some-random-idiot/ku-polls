@@ -1,8 +1,10 @@
 """KU Poll's models."""
 
 import datetime
+
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -45,8 +47,23 @@ class Choice(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)  # Links to a Question model
     text = models.CharField(max_length=500)
-    votes = models.IntegerField(default=0)
 
     def __str__(self):
         """Return the model's description."""
         return self.text
+
+    @property
+    def votes(self):
+        count = Vote.objects.filter(choice=self).count()
+        return count
+
+
+class Vote(models.Model):
+    """Represents a vote made by a user."""
+
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Voted by {self.user.username} for {self.choice.text}"
