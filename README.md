@@ -12,4 +12,5 @@ Welcome to KU Polls repository! KU Poll is a web application for conducting poll
 
 ## Iteration Plans
 + [Iteration 1 Plan](../../wiki/Iteration-1-Plan)<br/>
-+ [Iteration 2 Plan](../../wiki/Iteration-2-Plan)
++ [Iteration 2 Plan](../../wiki/Iteration-2-Plan)<br/>
++ [Iteration 3 Plan](../../wiki/Iteration-3-Plan)
