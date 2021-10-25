@@ -9,13 +9,19 @@
     <title>Polls</title>
 </head>
 <body>
+<div style="float: right">
+  {% if user.is_authenticated %}
+      Hello {{ user.username }}<br/>
+      <a href={% url 'logout' %}>Logout</a>
+  {% else %}
+      <a href={% url 'login' %}>Login</a>
+  {% endif %}
+</div>
 <div class="webTitle">
   <h1>KU Polls</h1>
 </div>
 
 {% if error_message == "error" %}<p><strong>The poll you tried to access is not available for voting!</strong></p>{% endif %}
-
-<h2>Choose a poll</h2>
 
 {% if latest_poll_list %}
     <ul>
