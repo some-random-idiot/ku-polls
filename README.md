@@ -14,3 +14,12 @@ Welcome to KU Polls repository! KU Poll is a web application for conducting poll
 + [Iteration 1 Plan](../../wiki/Iteration-1-Plan)<br/>
 + [Iteration 2 Plan](../../wiki/Iteration-2-Plan)<br/>
 + [Iteration 3 Plan](../../wiki/Iteration-3-Plan)
+
+## Running KU Polls
+
+Users provided by the initial data (users.json):
+
+| Username  | Password    |
+|-----------|-------------|
+| demo1     | Vote4me!    |
+| demo2     | Vote4me2    |

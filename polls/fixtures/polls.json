@@ -1,0 +1,102 @@
+[
+{
+  "model": "polls.question",
+  "pk": 1,
+  "fields": {
+    "text": "What is your favorite video game genre?",
+    "start_date": "2021-08-30T09:30:32Z",
+    "end_date": "2022-01-01T00:00:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "text": "What is your favorite game engine?",
+    "start_date": "2021-08-30T09:31:54Z",
+    "end_date": "2022-01-01T00:00:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 4,
+  "fields": {
+    "text": "Future poll",
+    "start_date": "2022-01-01T00:00:00Z",
+    "end_date": "2022-02-01T00:00:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 5,
+  "fields": {
+    "text": "Past Poll",
+    "start_date": "2021-05-01T00:00:00Z",
+    "end_date": "2021-06-04T00:00:00Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 5,
+  "fields": {
+    "question": 1,
+    "text": "Action"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 1,
+    "text": "Adventure"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 1,
+    "text": "Simulation"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 1,
+    "text": "Strategy"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 1,
+    "text": "Sports"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 1,
+    "text": "MMO"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 2,
+    "text": "Unreal Engine"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 2,
+    "text": "Unity"
+  }
+}
+]
